@@ -1,44 +1,76 @@
-# GRASS-WEED-DETECTION
-# 🌿 Grass Weed Detection using Deep Learning
+# Grass-Weed Detection Model Repository
 
-This project is a Flask-based web application for detecting grass weeds in images using a convolutional neural network model based on InceptionV3. The app supports image uploads, performs classification, and visualizes results using Grad-CAM heatmaps and overlays.
+This repository contains code and resources for detecting and classifying grass weeds using deep learning.
 
----
+## File Descriptions
 
-## 📁 Files Overview
+### 1. `train.py` - **Training the Model**
+**Objective:** Train a classification model using TensorFlow and Keras, leveraging the InceptionV3 architecture with custom classification layers.
 
-### 🔹 `train.py`
-- Trains an image classification model using TensorFlow and Keras.
-- Uses the InceptionV3 architecture (without the top layer).
-- Applies aggressive data augmentation for training and moderate augmentation for validation.
-- Saves the model to `trained_model.keras`.
-
-### 🔹 `predict.py`
-- Loads the trained model (`trained_model.keras`).
-- Provides:
-  - `predict_image()` to classify a single image.
-  - `generate_heatmap()` to produce Grad-CAM heatmaps and overlay images.
-
-### 🔹 `app.py`
-- Flask application backend:
-  - Handles image upload and validation.
-  - Calls prediction and heatmap functions from `predict.py`.
-  - Saves images and renders results to `index.html`.
-
-### 🔹 `index.html`
-- HTML template for the web interface.
-- Allows users to upload images.
-- Displays:
-  - Original image
-  - Predicted class label
-  - Grad-CAM heatmap
-  - Overlay image
+#### Key Features:
+- **Data Augmentation:** Uses aggressive transformations for training and moderate ones for validation, implemented with `ImageDataGenerator`.
+- **Model Architecture:** Utilizes a pretrained InceptionV3 model with added layers for task-specific classification.
+- **Optimization:** Employs Adam optimizer with a custom learning rate schedule for enhanced convergence.
+- **Callbacks:** Integrates EarlyStopping, ModelCheckpoint, and ReduceLROnPlateau for efficient training control.
+- **Output:** Saves the trained model in `.keras` format for deployment and prediction.
 
 ---
 
-## 🚀 How to Run
+### 2. `predict.py` - **Prediction and Visualization**
+**Objective:** Predict the class of a new image and visualize activation maps to interpret the model's predictions.
 
-### 1. Install Required Libraries
+#### Key Features:
+- **Prediction:** 
+  - Accepts an image path, preprocesses the image, and predicts its class using the saved model.
+- **Grad-CAM Heatmap:** 
+  - Generates heatmaps to interpret the model's focus areas, leveraging gradient-based techniques.
+- **Visualization:** 
+  - Creates superimposed images combining the original image with the Grad-CAM heatmap for better interpretability.
 
-```bash
-pip install flask tensorflow opencv-python numpy matplotlib
+---
+
+### 3. `app.py` - **Flask Web Application**
+**Objective:** Provides a user-friendly interface for uploading images and viewing predictions and Grad-CAM heatmaps.
+
+#### Key Features:
+- **Web Interface:** 
+  - Built using Flask, allowing users to upload images for classification.
+- **Results Display:** 
+  - Displays the predicted class and Grad-CAM heatmaps in a visually appealing format.
+- **Integration:** 
+  - Connects seamlessly with the trained model for backend processing.
+
+---
+
+### 4. `index.html` - **Frontend Template**
+**Objective:** HTML template for the Flask web application.
+
+#### Key Features:
+- **Interactive Design:** 
+  - Enables users to upload images and view results directly in the browser.
+- **Responsive Layout:** 
+  - Designed to be accessible on various devices using modern web design practices.
+
+---
+
+### Additional Files:
+- **Dataset Folder:** Contains the training and validation images, organized into labeled subdirectories.
+- **Model Checkpoints:** Saved models and logs for reproducing results.
+
+---
+
+
+### Project Screenshots
+
+### Page to upload image
+![image](https://github.com/user-attachments/assets/88a55410-df47-41bb-b6e1-b66015c7dc80)
+
+### Image detected as **Not Weed** by the Model
+![image](https://github.com/user-attachments/assets/21c5f449-e89e-477d-b2e4-f24d0751003e)
+
+### Image detected as **Weed** by the Model
+![image](https://github.com/user-attachments/assets/4b041f6e-189c-4ca7-b723-079569e7e9b3)
+
+
+
+
